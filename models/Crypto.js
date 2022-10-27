@@ -2,9 +2,17 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const URL_PATTERN = /^https?:\/\/.+$/i
 const cryptoSchema = new mongoose.Schema({
+//     You should make the following validations while creating or editing a crypto offer:
+// The Name should be at least two characters
+// The Price should be a positive number
+// The Crypto Image should start with http:// or https://.
+// The Description should be a minimum of 10 characters long.
+// The Payment Method must be one of the options
     name: {
         type: String,
         required: true,
+        minlength: [2, 'City must be at leats 2 characters long!']
+
     },
     image: {
         type: String,
@@ -17,11 +25,12 @@ const cryptoSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true,
+        min: 0,
     },
     description: {
         type: String,
         required: true,
-        // minlength: [3, 'City must be at leats 3 characters long!']
+        minlength: [10, 'City must be at leats 10 characters long!']
     },
     paymentMethod: {
         type: String,
