@@ -1,19 +1,17 @@
-const bookingServices = require('../services/cryptoServices')
+const cryptoServices = require('../services/cryptoServices')
 
 
 exports.preloadTrip = async (req, res, next) => {
-    const hotel = await bookingServices.getOne(req.params.hotelID).lean()
+    const crypto = await cryptoServices.getOne(req.params.cryptoID).lean()
 
-    req.hotel = hotel
+    req.crypto = crypto
 
     next()
 }
 
 exports.isTripAuthor = async (req, res, next) => {
-    const hotel = await bookingServices.getOne(req.params.hotelID).lean()
-    // console.log(req.user._id)
-    // console.log(hotel)
-    if (hotel?.owner != req.user._id) {
+    const crypto = await cryptoServices.getOne(req.params.cryptoID).lean()
+    if (crypto?.owner != req.user._id) {
         return next({ message: 'You are not authorized', status: 401 })
     }
     next()

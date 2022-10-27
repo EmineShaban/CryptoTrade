@@ -28,9 +28,15 @@ router.post('/register', isGueat, async (req, res) => {
     // if(validator.isEmail(req.body.email) == false){
     //     return res.render('auth/register', { error: "Invalid email!" })
     // }
-    // if(req.body.password.length <5 ){
-    //     return res.render('auth/register', { error: "Password must be at leats 5 characters long!" })
-    // }
+    if(req.body.username.length <5 ){
+        return res.render('auth/register', { error: "username must be at leats 5 characters long!" })
+    }
+    if(req.body.email.length <10 ){
+        return res.render('auth/register', { error: "email must be at leats 10 characters long!" })
+    }
+    if(req.body.password.length <4 ){
+        return res.render('auth/register', { error: "password must be at leats 10 characters long!" })
+    }
     const { password, rePassword, ...userData } = req.body
    
 

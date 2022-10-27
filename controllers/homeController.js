@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const bookingServices = require('../services/cryptoServices')
+const cryptoServices = require('../services/cryptoServices')
 const { isAuth } = require('../middlewares/authMiddleware')
 const userService = require('../services/userService')
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     // const hotelOffer = await bookingServices.getAll().lean()
     // hotelOffer.sort((a, b) => b.freeRooms - a.freeRooms)
     res.render('home')

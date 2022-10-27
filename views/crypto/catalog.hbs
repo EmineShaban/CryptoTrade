@@ -1,27 +1,20 @@
+<main>
+    <section class="crypto-market">
+        <h1><span>Crypto</span> Trade</h1>
+            {{#if cryptoOffer}}
+        <div class="offer-list">
 
-    <main>
-        <section class="crypto-market">
-            <h1><span>Crypto</span> Trade</h1>
-            <div class="offer-list">
-
-                <div class="coin">
-                    <div class="coin-img">
-                        <img src="/images/ethereum.png">
-                    </div>
-                    <div class="coin-info">
-                        <h1>Ethereum</h1>
-                        <p><span>Price: </span>$2,338.55</p>
-                        <p><span>Payment: </span>debit-card</p>
-                    </div>
-
-                    <a href="#" class="btn-details">Details</a>
-                </div>
-
-           
-
+            <div class="added-hotels">
+                {{#each cryptoOffer}}
+                {{>cryptoTemplate}}
+                {{/each}}
             </div>
-            <!-- <div class="no-offer">
-                <p>There are no crypto offers found!</p>
-            </div> -->
-        </section>
-    </main>
+
+        </div>
+        {{else}}
+        <div class="no-offer">
+            <p>There are no crypto offers found!</p>
+        </div>
+        {{/if}}
+    </section>
+</main>
