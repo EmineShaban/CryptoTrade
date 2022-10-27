@@ -1,4 +1,4 @@
-const Booking = require('../models/Booking')
+const Booking = require('../models/Crypto')
 
 
 exports.create = (BookingData) => Booking.create(BookingData)
