@@ -7,8 +7,10 @@ const { preloadTrip, isTripAuthor } = require('../middlewares/tripMiddleware')
 
 
 
-router.get('/catalog', isAuth, (req, res) => {
-    res.render('crypto/catalog')
+router.get('/catalog', async(req, res) => {
+        const cryptoOffer = await cryptoServices.getAll().lean()
+
+    res.render('crypto/catalog', {cryptoOffer})
 })
 
 
@@ -39,13 +41,12 @@ router.post('/create', isAuth, async (req, res) => {
 
 router.get(
     '/:cryptoID/details',
-    isAuth,
     async (req, res) => {
         try {
             const crypto = await cryptoServices.getOne(req.params.cryptoID).lean()
             const user = await userService.getOne(req.user?._id).lean()
             const isAuthor = crypto.owner == req.user?._id
-            const isAlreadyJoin = user.bookedcryptos?.find(element => element == crypto._id) == crypto._id
+            const isAlreadyJoin = crypto.buyCrypto?.find(element => element == req.user?._id) == req.user?._id
             res.render('crypto/details', { ...crypto, isAuthor, isAlreadyJoin })
         } catch (error) {
             return res.render(`crypto/details`, { error: getErrorMessage(error) })
@@ -56,16 +57,16 @@ router.get(
 router.get(
     '/:cryptoID/delete',
     isAuth,
-    isTripAuthor,
+    // isTripAuthor,
     async (req, res) => {
         await cryptoServices.delete(req.params.cryptoID)
-        res.redirect('/')
+        res.redirect('/crypto/catalog')
     })
 
 router.get(
     '/:cryptoID/edit',
     isAuth,
-    isTripAuthor,
+    // isTripAuthor,
     async (req, res) => {
         try {
             const crypto = await cryptoServices.getOne(req.params.cryptoID).lean()
@@ -79,7 +80,7 @@ router.get(
 router.post(
     '/:cryptoID/edit',
     isAuth,
-    isTripAuthor,
+    // isTripAuthor,
     async (req, res) => {
         try {
             await cryptoServices.update(req.params.cryptoID, req.body)
@@ -95,9 +96,9 @@ router.get(
     preloadTrip,
     async (req, res) => {
         try {
-            await userService.addcrypto(req.user._id, req.crypto._id)
-            req.crypto.freeRooms -= 1
-            await cryptoServices.updateRooms(req.params.cryptoID, req.crypto)
+            await cryptoServices.addCrypto(req.crypto._id, req.user._id)
+            // req.crypto.freeRooms -= 1
+            // await cryptoServices.updateRooms(req.params.cryptoID, req.crypto)
             res.redirect(`/crypto/${req.params.cryptoID}/details`)
         } catch (error) {
             res.render(`crypto/${req.params.cryptoID}/details`, { ...req.body, error: getErrorMessage(error) })
