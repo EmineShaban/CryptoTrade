@@ -1,11 +1,26 @@
 
-        <section id="viewLogin">
-            <h2>Login:</h2>
-            <form method="post" id="formLogin">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="Enter your Username">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter your Password">
-                <input type="submit" class="login" value="Login">
-            </form>
-        </section>
+
+<main>
+    <!-- In case of error, you should display div with class "errorContainer" -->
+    <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
+    {{#if error}}
+    <div>
+        <div class="errorContainer">
+            <p>{{error}}</p>
+        </div>
+    </div>
+    {{/if}}
+
+
+    <div class="login-box">
+        <h1>Login</h1>
+        <form method="post">
+            <label>Email</label>
+            <input type="text" name="email" placeholder="Email..">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Password..">
+            <input type="submit" value="Submit">
+        </form>
+        <p>Not have an account? <a href="/auth/register">Register here</a></p>
+    </div>
+</main>

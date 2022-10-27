@@ -5,17 +5,17 @@ const {SECRET} = require('../config/env')
 
 exports.create = (userData) => User.create(userData)
 
-exports.login = async (username, password) => {
-    const user = await User.findOne ({username})
-
+exports.login = async (email, password) => {
+    const user = await User.findOne({email})
+// console.log(user)
     if(!user) {
-        throw{ message: 'Cannot find username or password'}
+        throw{ message: 'Cannot find email or '}
     }
 
     const isValid = bcrypt.compare(password, user.password)
 
     if(!isValid){
-        throw{ message: 'Cannot find username or password'}
+        throw{ message: 'Cannot find email or password'}
 
     }
 

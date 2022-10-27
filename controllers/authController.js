@@ -10,8 +10,8 @@ router.get('/login', isGueat, (req, res) => {
 
 router.post('/login', isGueat, async (req, res) => {
     try {
-        const { username, password } = req.body
-        const user = await authServices.login(username, password)
+        const { email, password } = req.body
+        const user = await authServices.login(email, password)
         const token = await authServices.createToken(user)
         res.cookie(COOKIE_SESSION_NAME, token, { httpOnly: true })
         res.redirect('/')
@@ -25,12 +25,12 @@ router.get('/register', isGueat, (req, res) => {
 })
 
 router.post('/register', isGueat, async (req, res) => {
-    if(validator.isEmail(req.body.email) == false){
-        return res.render('auth/register', { error: "Invalid email!" })
-    }
-    if(req.body.password.length <5 ){
-        return res.render('auth/register', { error: "Password must be at leats 5 characters long!" })
-    }
+    // if(validator.isEmail(req.body.email) == false){
+    //     return res.render('auth/register', { error: "Invalid email!" })
+    // }
+    // if(req.body.password.length <5 ){
+    //     return res.render('auth/register', { error: "Password must be at leats 5 characters long!" })
+    // }
     const { password, rePassword, ...userData } = req.body
    
 
